@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useTransition } from 'react'
+import React, { useEffect, useState, useTransition } from 'react'
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -177,6 +177,12 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
             await updateCredits(userId, -1)
         })
     }
+
+    useEffect(() => {
+        if(image && (type === 'restore' || type === 'removeBackground')) {
+            setNewTranformation(transformationType.config)
+        }
+    }, [image, transformationType.config, type])
 
     return (
         <Form {...form}>
